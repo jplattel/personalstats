@@ -22,5 +22,31 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+
+
+    <!-- Via: https://minimalanalytics.com/ -->
+    <script>
+      (function(a,b){var c=function(i,j){j||(j=window.location.href),i=i.replace(/[[]]/g,'\$&');
+      var k=new RegExp('[?&]'+i+'(=([^&#]*)|&|#|$)'),l=k.exec(j);
+      return l?l[2]?decodeURIComponent(l[2].replace(/+/g,' ')):void 0:void 0},
+      d=function(){return'_'+Math.random().toString(36).substr(2,9)},
+      e=function(){return localStorage.cid||(localStorage.cid=d()),localStorage.cid},
+      f=function(i){var j=[];for(var k in i)i.hasOwnProperty(k)&&
+      void 0!==i[k]&&j.push(encodeURIComponent(k)+'='+encodeURIComponent(i[k]));
+      return j.join('&')},g=function(){setTimeout(function(){var j={v:'1',tid:b,cid:e(),
+      t:'pageview',sd:screen.colorDepth?screen.colorDepth+'-bits':void 0,dr:c('ref'),
+      dt:document.title,dl:document.location.origin+
+      document.location.pathname+document.location.search,
+      ul:(navigator.language||'').toLowerCase(),de:document.characterSet,
+      sr:(window.screen||{}).width+'x'+(window.screen||{}).height,
+      vp:(window.visualViewport||{}).width+'x'+(window.visualViewport||{}).height},i=new XMLHttpRequest;
+      i.open('GET','https://www.google-analytics.com/collect?'+f(j)+'&z='+Math.random(),!0),
+      i.send(null)},10)},h=a.pushState;a.pushState=function(i){
+      return'function'==typeof a.onpushstate&&a.onpushstate({state:i}),g(),h.apply(a,arguments)},g()})
+      (window.history,'UA-131015444-1');
+    </script>
+
+    <!-- Mailchimp signup -->
+    <script type="text/javascript" src="//downloads.mailchimp.com/js/signup-forms/popup/unique-methods/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script><script type="text/javascript">window.dojoRequire(["mojo/signup-forms/Loader"], function(L) { L.start({"baseUrl":"mc.us2.list-manage.com","uuid":"e8988497f61d90c8fc52a5529","lid":"fff395ff95","uniqueMethods":true}) })</script>
   </body>
 </html>
