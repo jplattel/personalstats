@@ -11,9 +11,8 @@ import '@/plugins/toast'
 // Vue.config.productionTip = false
 import VueResource from 'vue-resource';
 
-Vue.use(VueResource);
-
-console.log("region", process.env.VUE_APP_AWS_REGION)
+Vue.use(VueResource)
+Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
 new Vue({
   router,

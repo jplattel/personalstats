@@ -22,6 +22,7 @@ import Average from '@/components/cards/Average'
 import Sum from '@/components/cards/Sum'
 import Count from '@/components/cards/Count'
 import List from '@/components/cards/List'
+import ListChildren from '@/components/cards/ListChildren'
 import CountChart from '@/components/cards/CountChart'
 import SumChart from '@/components/cards/SumChart'
 
@@ -33,8 +34,9 @@ export default {
     Sum,
     Count,
     List,
+    ListChildren,
     CountChart,
-    SumChart
+    SumChart,
   },
   methods: {
     deleteCard () {

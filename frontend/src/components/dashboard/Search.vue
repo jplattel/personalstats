@@ -21,6 +21,7 @@
             <option value="average">Average found numbers</option>
             <option disabled>────────────</option>
             <option value="list">Concatenate to a single list</option>
+            <option value="list-children">Show children (limit 10)</option>
             <option disabled>────────────</option>
             <option value="count-chart">Count (bar chart of the last 30 days)</option>
             <option value="sum-chart">Sum (bar chart of the last 30 days)</option>
