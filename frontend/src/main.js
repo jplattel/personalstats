@@ -12,7 +12,6 @@ import '@/plugins/toast'
 import VueResource from 'vue-resource';
 
 Vue.use(VueResource)
-Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
 new Vue({
   router,

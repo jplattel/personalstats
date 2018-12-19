@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="col-md-4 offset-md-4" style="padding-top: 200px">
+    <div class="col-md-4 offset-md-4" style="padding-top: 100px">
       
       <div class="card shadow-lg bg-light mb-3">
         <div class="card-header">

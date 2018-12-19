@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# select WORD in "dev" "beta" "prod"; do
+#     echo "$WORD"
+# done
+
 # Deploying frontend
 printf "Deploying \033[34mfrontend\033[0m...\n"
 

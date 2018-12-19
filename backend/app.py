@@ -16,6 +16,7 @@ authorizer = CognitoUserPoolAuthorizer(
 
 # Cognito client for getting users from the backend
 cognito_client = boto3.client('cognito-idp')
+dynamo_db = boto3.client('dynamodb', region_name='us-west-1')
 
 # Utilty function for rendering the nodes from Workflowy (should be made memory save (with an iterator?))
 def render_nested_json(root, indent=0):
@@ -32,15 +33,29 @@ def render_nested_json(root, indent=0):
             node['children'].append(n)
     return node
 
-# Dashbourd route
-@app.route('/', methods=['GET'], authorizer=authorizer, cors=True)
+# Get all cards for a user
+@app.route('/cards', methods=['GET'], authorizer=authorizer, cors=True)
 def dashboard():
-    return {"cards": []}
+    cognito_identity_id = app.current_request.identity.cognitoIdentityId
+    filter_by_cognito_identity_id = Key('cognito_identity_id').eq(cognito_identity_id)
+    cards = dynamo_db.query(
+        TableName=config('DYNAMO_DB_TABLE'),
+        KeyConditionExpression=filter_by_cognito_identity_id
+    )
+    return {"cards": cards}
 
-# TODO: Create a card route
+# Create a card for a user
 @app.route('/cards', methods=['POST'], authorizer=authorizer, cors=True)
 def create_card():
-    return {"cards": []}
+    cognito_identity_id = app.current_request.context['identity']
+    # .get('cognitoIdentityId')
+    # card = app.current_request.json_body
+    # card.update(cognito_identity_id=cognito_identity_id)
+    # dynamo_db.put_item(
+    #     TableName=config('DYNAMO_DB_TABLE'),
+    #     Item=card,
+    # )
+    return {"card": cognito_identity_id}
 
 # TODO: Delete a card route
 @app.route('/cards/{card_uuid}/delete', methods=['POST'], authorizer=authorizer, cors=True)
@@ -53,15 +68,14 @@ def authenticated():
     return {"status": "ok"}
 
 # Endpoint that let's you configure invite codes
-@app.route('/signup/invite', methods=["POST"], cors=True)
+@app.route('/signup/invite', methods=["GET"], cors=True)
 def check_invite_code():
     # TODO: get from env, user .split(",") for multiple
+    invite = app.current_request.query_params.get('invite', '')
     invite_codes = [
         "personal-beta" 
     ]
-    data = app.current_request.json_body
-    invite_code = data.get("invite_code")
-    if invite_code in invite_codes:
+    if invite in invite_codes:
         return {"invite": "accepted"}
     else:
         raise BadRequestError("Invalid invite code..")

@@ -99,11 +99,14 @@ export default {
     },
     createCard() {
       if (this.search && this.cardMethod) {
-        this.$store.commit('setCard', {
+        let card = {
           'uuid': uuidv4(),
           'search': this.search,
           'method': this.cardMethod
-        })
+        }
+        
+        this.$store.commit('setCard', card)
+        this.$Amplify.API.post("personalstats", '/cards', {'body': card})
         this.$snotify.success('Navigating to the dashboard', 'Card added!')
         this.$router.push('/')
       }
