@@ -40,7 +40,7 @@
         <node v-for="node in searchResults" :key="node.uuid" :node="node" :children="false"></node>
       </ul>
 
-      <a @click="getWorkflowyData">Refresh from Workflowy</a>
+      <a class="btn btn-outline-primary" @click="getWorkflowyData">Refresh from Workflowy</a>
 
     </div>
 

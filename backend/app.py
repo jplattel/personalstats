@@ -47,7 +47,7 @@ def dashboard():
 # Create a card for a user
 @app.route('/cards', methods=['POST'], authorizer=authorizer, cors=True)
 def create_card():
-    cognito_identity_id = app.current_request.context['identity']
+    cognito_identity_id = dict(app.current_request)
     # .get('cognitoIdentityId')
     # card = app.current_request.json_body
     # card.update(cognito_identity_id=cognito_identity_id)
