@@ -6,6 +6,7 @@
       </div>
 
       <div class="col-md-6">
+
         <div class="card">
           <div class="card-header">
             Workflowy
@@ -18,6 +19,31 @@
             <div v-else class="alert alert-danger" role="alert">
               Workflowy is <strong>not</strong> connected. (<a href="#" @click="connectWorkflowy">Authenticate?</a>)
             </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            FAQ
+          </div> 
+          <div class="card-body">
+            <p>Are things not working as they are suppose to? This small FAQ might help you out!</p>
+
+            <ul>
+              <li>
+                <strong>I'm not seeing all items in Personal stats?</strong><br />
+                We use a experimental unsupported Workflowy API. Which acts as a browser, 
+                if you don't open all items in the workflowy web interface, we cannot see them all.
+              </li>
+              <li>
+                <strong>The loading from Workflowy takes a long time.</strong><br />
+                Try refreshing the page, this might fix some issues.
+              </li>
+              <li>
+                <strong>I want to delete my account.</strong><br />
+                Sure, let me know at: <a href="mailto:jsplattel@gmail.com">jsplattel@gmail.com</a> and I will delete it.
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -110,12 +136,9 @@ export default {
   created () {
     Auth.currentAuthenticatedUser().then((user) => {
       this.webhookCode = user.attributes['custom:webhook_code']
-      let base = 'https://h2s4qel6va.execute-api.us-east-1.amazonaws.com/api/'
+      let base = 'https://api.personalstats.nl/'
       let url = base + 'webhook/' + user.attributes['custom:webhook_code'] + '/' + user.attributes['sub']
-      console.log(url)
     })
-
-
   }
 }
 </script>
