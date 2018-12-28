@@ -63,7 +63,7 @@ def delete_card():
     return {"cards": []}
 
 # Basic endpoint for healthchecks (used by the author)
-@app.route('/status', methods=['GET'], authorizer=authorizer, cors=True)
+@app.route('/status', methods=['GET'], cors=True)
 def authenticated():
     return {"status": "ok"}
 
