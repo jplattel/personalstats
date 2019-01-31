@@ -20,9 +20,20 @@
               <input type="password" autocomplete="current-password" class="form-control" v-model="password" placeholder="">
             </div>
           </form>
+
+          <hr>
+
+          <form>
+            <p>If you don't want to supply your login, you can also get your session token from local storage.</p>
+            <div class="form-group">
+              <label for="session_id">Session ID</label>
+              <input class="form-control" type="text" v-model="sessionId" placeholder="Session ID">
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary float-right" @click="workflowyLogin">Login with Worklowy</button>
+          <button v-if="!sessionId" type="button" class="btn btn-primary float-right" @click="workflowyLogin">Login with Worklowy</button>
+          <button v-if="sessionId" type="button" class="btn btn-primary float-right" @click="workflowySetSessionId">Add session id</button>
         </div>
       </div>
     </div>
@@ -38,10 +49,24 @@ export default {
     return {
       username: '',
       password: '',
+      sessionId: null
     }
   },
   methods: {
-     workflowyLogin () {
+    async workflowySetSessionId () {
+      let user = await this.$Amplify.Auth.currentAuthenticatedUser();
+      let result = this.$Amplify.Auth.updateUserAttributes(user, {
+        'custom:session_id': this.sessionId
+      }).then(response => {
+        $('#workflowyLogin').modal('hide')
+        this.$snotify.success('Added session ID')
+      }).catch(error => {
+        // Notify the user
+        this.$snotify.error('Uh oh, cannot store workflowy token..')
+        console.log(error)
+      });
+    },
+    workflowyLogin () {
       let payload = {
             body: {
               "username": this.username,

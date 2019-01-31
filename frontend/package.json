@@ -3,13 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "deploy": "sh scripts/deploy.sh",
+    "deploy-beta": "sh scripts/deploy-beta.sh",
+    "deploy-prod": "sh scripts/deploy-prod.sh",
+    "build-beta": "vue-cli-service build --mode development",
+    "build-prod": "vue-cli-service build --mode production",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@sentry/browser": "^4.4.2",
+    "@vue/cli": "^3.3.0",
     "aws-amplify": "^1.1.8",
     "aws-amplify-vue": "^0.1.5",
     "chart.js": "^2.7.3",

@@ -1,4 +1,4 @@
 psycopg2
-wfapi
 requests
 python-decouple
+wfapi

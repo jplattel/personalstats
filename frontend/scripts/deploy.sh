@@ -1,1 +1,0 @@
-aws s3 sync dist s3://personalstats.nl --acl public-read --delete --profile joostplattel

@@ -1,5 +1,6 @@
 from chalice import Chalice, CognitoUserPoolAuthorizer, BadRequestError, NotFoundError
 from wfapi.error import WFLoginError
+from wfapi.workflowy.features.deamon import WFMixinDeamon
 from wfapi import *
 import boto3
 from decouple import config
@@ -13,7 +14,6 @@ authorizer = CognitoUserPoolAuthorizer(
     config('COGNITO_USER_POOL_NAME'), 
     provider_arns=[config("COGNITO_USER_POOL_ARN")]
 )
-
 # Cognito client for getting users from the backend
 cognito_client = boto3.client('cognito-idp')
 dynamo_db = boto3.client('dynamodb', region_name='us-west-1')
@@ -60,7 +60,7 @@ def create_card():
 # TODO: Delete a card route
 @app.route('/cards/{card_uuid}/delete', methods=['POST'], authorizer=authorizer, cors=True)
 def delete_card():
-    return {"cards": []}
+    return {"statuss": 'deleted'}
 
 # Basic endpoint for healthchecks (used by the author)
 @app.route('/status', methods=['GET'], cors=True)
@@ -87,7 +87,6 @@ def workflowy_login():
     # Login to workflowy and collect the session token.. 
     try:
         wf = Workflowy(username=data['username'], password=data['password'])
-        # TODO: update the user session ID into cognito trough here..
         return {'session_id': wf.browser.session.cookies.get('sessionid')}
     except WFLoginError:
         raise BadRequestError("Cannot authorize with Workflowy")
@@ -99,7 +98,10 @@ def workflowy_data():
     # Login to workflowy and collect the session token.. 
     try:
         wf = Workflowy(sessionid=data['session_id'])
-        return render_nested_json(wf.root)
+        data = []
+        for root_node in wf.root:
+            data.append(render_nested_json(root_node))
+        return data
     except WFLoginError:
         raise BadRequestError("Cannot authorize with Workflowy")
 

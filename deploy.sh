@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# select WORD in "dev" "beta" "prod"; do
-#     echo "$WORD"
-# done
-
-# Deploying frontend
+# Deploy frontend
 printf "Deploying \033[34mfrontend\033[0m...\n"
+cd frontend
+sh scripts/deploy-$1.sh
 
-printf " - Building the vue app...\n"
-printf " - Syncing with S3...\n"
+# Move back to project root
+cd ..
 
-# Deploying backend
+# Deploy backend
 printf "Deploying \033[34mbackend\033[0m...\n"
-
-printf " - Syncing chalice...\n"
+cd backend
+sh scripts/deploy-$1.sh
