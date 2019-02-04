@@ -1,4 +1,4 @@
 psycopg2
 requests
 python-decouple
-wfapi
+git+https://github.com/EcmaXp/wfapi@a528e025bd0834255580d9b7ab06eb0cfa3919a2

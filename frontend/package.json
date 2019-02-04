@@ -5,7 +5,7 @@
   "scripts": {
     "deploy-beta": "sh scripts/deploy-beta.sh",
     "deploy-prod": "sh scripts/deploy-prod.sh",
-    "build-beta": "vue-cli-service build --mode development",
+    "build-beta": "vue-cli-service build --mode beta",
     "build-prod": "vue-cli-service build --mode production",
     "serve": "vue-cli-service serve",
     "lint": "vue-cli-service lint"
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "^3.0.5",
-    "@vue/cli-service": "^3.0.5",
+    "@vue/cli-service": "^3.3.1",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.8.0",
     "eslint-plugin-vue": "^5.0.0-0",

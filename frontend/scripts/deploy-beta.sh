@@ -1,6 +1,6 @@
 
 
-printf " - Building the vue app...\n"
+printf " - Building frontend for beta...\n"
 npm run build-beta > /dev/null
 
 printf " - Syncing with S3 on beta.personalstats.nl\n"

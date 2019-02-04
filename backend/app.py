@@ -1,7 +1,6 @@
 from chalice import Chalice, CognitoUserPoolAuthorizer, BadRequestError, NotFoundError
 from wfapi.error import WFLoginError
-from wfapi.workflowy.features.deamon import WFMixinDeamon
-from wfapi import *
+from wfapi import Workflowy
 import boto3
 from decouple import config
 
