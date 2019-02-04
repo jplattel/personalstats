@@ -1,4 +1,8 @@
-baseURL = "http://example.org/"
+baseURL = "http://blog.personalstats.nl/"
 languageCode = "en-us"
-title = "My New Hugo Site"
-theme = "hugo-nuo"
+theme = "aether"
+title = ""
+
+[params]
+brand = "Personalstats Blog"
+description = "The website's description"
