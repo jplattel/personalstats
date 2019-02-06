@@ -33,7 +33,9 @@
       </div>
 
       <!-- Render the item tree, but only when not searching -->
-      <ul v-if="searchResults.length === 0"><node :node="rootNode" :children="true"></node></ul>
+      <ul v-if="searchResults.length === 0 && search.length === 0">
+        <node v-for="node in rootNode" :key="node.uuid" :node="node" :children="true"></node>
+      </ul>
 
       <!-- Search results, flattened to a single list -->
       <ul v-if="searchResults.length > 0">
@@ -88,8 +90,8 @@ export default {
       let auth_payload = { body: { "session_id": this.sessionId } }
       this.$Amplify.API.post("personalstats", '/workflowy/data', auth_payload).then(response => {
         // Store the session ID.
-        this.rootNode = response.children[0]
-        this.$store.commit('setNodes', response.children[0])
+        this.rootNode = response
+        this.$store.commit('setNodes', response)
         this.$snotify.success('Synced with Workflowy!')
       }).catch(error => {
         // Notify the user
@@ -106,7 +108,7 @@ export default {
         }
         
         this.$store.commit('setCard', card)
-        this.$Amplify.API.post("personalstats", '/cards', {'body': card})
+        // this.$Amplify.API.post("personalstats", '/cards', {'body': card})
         this.$snotify.success('Navigating to the dashboard', 'Card added!')
         this.$router.push('/')
       }

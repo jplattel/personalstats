@@ -2,7 +2,7 @@
     <li>
         <span :class="'node-' + node.uuid">{{ node.name }}</span>
         <ul v-if="children && node.children">
-            <node v-for="child in node.children" :key="child.name" :node="child" :children="children"></node>
+            <node v-for="child in node.children" :key="child.uuid" :node="child" :children="children"></node>
         </ul>  
     </li>
 </template>

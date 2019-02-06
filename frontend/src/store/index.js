@@ -29,21 +29,22 @@ const store = new Vuex.Store({
   },
   getters: {
     searchNodes: (state) => (query) => {
-      function search(node, query, results) {
-        // This node
-        if (node.name && node.name.indexOf(query) !== -1) {
-          results.push(node)
-        } // And its children
-        if (node.children) {
-          node.children.forEach(child => {
-            results.concat(search(child, query, results))
-          });
+      function search(nodes, query, results) {
+        for (let i = 0; i < nodes.length; i++) {
+          var node = nodes[i];
+          if (node.name && node.name.indexOf(query) !== -1) {
+            results.push(node)
+          } // And its children
+          if (node.children) {
+            node.children.forEach(child => {
+              results.concat(search([child], query, results))
+            });
+          }
         }
-        return results
+        return results 
       }
-      let results = []
       if (state.nodes) {
-        return search(state.nodes, query, results)      
+        return search(state.nodes, query, [])
       } else {
         return []
       }

@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Login from '@/components/user/Login.vue'
-import Signup from '@/components/user/Signup.vue'
-import Logout from '@/components/user/Logout.vue'
-import Search from '@/components/dashboard/Search.vue'
-import Dashboard from '@/components/dashboard/Dashboard.vue'
-import CardView from '@/components/cards/CardView.vue'
-import Settings from '@/components/dashboard/Settings.vue'
+// Code split pages
+const Login = () => import(/* webpackChunkName: "login" */ '@/components/user/Login.vue')
+const Signup = () => import(/* webpackChunkName: "signup" */ '@/components/user/Signup.vue')
+const Logout = () => import(/* webpackChunkName: "logout" */ '@/components/user/Logout.vue')
+const Search = () => import(/* webpackChunkName: "search" */ '@/components/dashboard/Search.vue')
+const Dashboard = () => import(/* webpackChunkName: "dashboard" */ '@/components/dashboard/Dashboard.vue')
+const Settings = () => import(/* webpackChunkName: "settings" */ '@/components/dashboard/Settings.vue')
+const CardView = () => import(/* webpackChunkName: "cardview" */ '@/components/cards/CardView.vue')
 
 import * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue';
