@@ -3,29 +3,29 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://blog.personalstats.nl/post/first-post/</loc>
+    <loc>https://blog.personalstats.nl/post/first-post/</loc>
     <lastmod>2019-02-04T23:25:25+01:00</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.personalstats.nl/</loc>
-    <lastmod>2019-02-04T23:25:25+01:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.personalstats.nl/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://blog.personalstats.nl/post/</loc>
+    <loc>https://blog.personalstats.nl/</loc>
     <lastmod>2019-02-04T23:25:25+01:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://blog.personalstats.nl/tags/</loc>
+    <loc>https://blog.personalstats.nl/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.personalstats.nl/post/</loc>
+    <lastmod>2019-02-04T23:25:25+01:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://blog.personalstats.nl/tags/</loc>
     <priority>0</priority>
   </url>
   

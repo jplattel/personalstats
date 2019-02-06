@@ -1,4 +1,4 @@
-baseURL = "http://blog.personalstats.nl/"
+baseURL = "https://blog.personalstats.nl/"
 languageCode = "en-us"
 theme = "aether"
 title = ""
