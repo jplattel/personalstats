@@ -47,7 +47,10 @@
     <!-- Footer -->
     <footer v-if="user" class="footer">
       <div class="container">
-        <span class="text-muted"><a href="https://workflowy.com/s/personalstats-releas/LkIWJ1VqMUnncyOE">Release log</a> - Questions or ideas, bugs or something else? <a href="mailto:jsplattel+personalstats@gmail.com">Email us!</a></span>
+        <span class="text-muted">
+          <a href="https://blog.personalstats.nl">Blog</a> | 
+          <a href="https://workflowy.com/s/personalstats-releas/LkIWJ1VqMUnncyOE">Release log</a> - Questions or ideas, bugs or something else? <a href="mailto:jsplattel+personalstats@gmail.com">Email us!</a>
+        </span>
       </div>
     </footer>
 
