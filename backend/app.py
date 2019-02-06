@@ -3,6 +3,7 @@ from wfapi.error import WFLoginError
 from wfapi import Workflowy
 import boto3
 from decouple import config
+import email
 
 # Chalice application config
 app = Chalice(app_name='personalstats')
@@ -16,6 +17,7 @@ authorizer = CognitoUserPoolAuthorizer(
 # Cognito client for getting users from the backend
 cognito_client = boto3.client('cognito-idp')
 dynamo_db = boto3.client('dynamodb', region_name='us-west-1')
+s3_client = boto3.client('s3')
 
 # Utilty function for rendering the nodes from Workflowy (should be made memory save (with an iterator?))
 def render_nested_json(root, indent=0):
@@ -111,7 +113,7 @@ def webhook_activate(webhook_code, cognito_id):
 
     # See if we can find a user in Cognito
     cognito_user = cognito_client.list_users(
-        UserPoolId="us-east-1_C9oDqsGvF",
+        UserPoolId=config('COGNITO_USER_POOL_ID'),
         Filter="sub = \"{}\"".format(cognito_id)
     ).get('Users')
     if len(cognito_user) != 1:
@@ -150,6 +152,48 @@ def webhook_activate(webhook_code, cognito_id):
         # connection to workflowy. (and then suffix the expended session ID)
         raise BadRequestError("Cannot authorize with Workflowy")
 
-# # @app.on_s3_event(bucket='workflowy-data')
-# # def parse_email(event):
-# #     print("Object uploaded for bucket: %s, key: %s" % (event.bucket, event.key))
+@app.on_s3_event(bucket='email.personalstats.nl', events=['s3:ObjectCreated:*'])
+def parse_email(event):
+    obj = s3_client.get_object(Bucket='email.personalstats.nl', Key=event.key)
+    email_file = obj['Body'].read().decode('utf-8')
+    email_content = email.message_from_string(email_file)
+    email_code = email_content['to'].split('-', 1)[0]
+    sub = email_content['to'][len(email_code) + 1:].split('@')[0]
+
+    cognito_user = cognito_client.list_users(
+        UserPoolId=config('COGNITO_USER_POOL_ID'),
+        Filter="sub = \"{}\"".format(sub)
+    ).get('Users')
+    if len(cognito_user) != 1:
+        raise NotFoundError('User {sub}, not found, deleting message'.format(sub))
+    
+    attributes = cognito_user[0].get("Attributes", [])
+    user_email_code = list(filter(
+        lambda attr: attr.get("Name") == "custom:email_code", attributes
+    ))
+
+    if not email_code == user_email_code[0].get("Value"):
+        raise NotFoundError('User not found, deleting message')
+    
+    # Get session id
+    session_id = list(filter(
+        lambda attr: attr.get("Name") == "custom:session_id", attributes
+    ))
+    if len(session_id) != 1:
+        raise NotFoundError('User not found, deleting message')
+
+    # Get the post data: expecting: {"name": "node content here"}
+    # data = app.current_request.json_body
+
+    # Setup workflowy
+    wf = Workflowy(sessionid=session_id[0].get("Value"))
+    node = wf.root.create()
+    try:
+        node.edit(email_content['subject']) 
+        return {"status": 'ok'}
+    except WFLoginError:
+        # TODO: email the user once the let them know we have trouble with the 
+        # connection to workflowy. (and then suffix the expended session ID)
+        raise BadRequestError("Cannot authorize with Workflowy")
+
+    # print("Object uploaded for bucket: %s, key: %s" % (event.bucket, event.key))

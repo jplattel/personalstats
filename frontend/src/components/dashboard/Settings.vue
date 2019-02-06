@@ -79,10 +79,10 @@
             </p>
 
             <p>
-              <code>work_in_progress@email.com</code>
+              <input class="form-control" :value="emailCode + '-' + user + '@email.personalstats.nl'">
             </p>
             
-            <a href="" class="btn btn-block btn-outline-dark">Reset to a new email</a>
+            <a class="btn btn-block btn-outline-dark" @click="resetEmail()">Reset to a new email</a>
 
           </div>
         </div>
@@ -102,7 +102,8 @@ export default {
   name: 'Settings',
   data: () => {
     return {
-      webhookCode: ''
+      webhookCode: '',
+      emailCode: ''
     }
   },
   methods: {
@@ -123,6 +124,16 @@ export default {
         this.$snotify.success('Webhook code reset!')
       })
     },
+    async resetEmail () {
+      let emailCode = Math.random().toString(36).substring(2)
+      let user = await Auth.currentAuthenticatedUser();
+      let result = await Auth.updateUserAttributes(user, {
+        'custom:email_code': emailCode
+      }).then(response => {
+        this.emailCode = emailCode
+        this.$snotify.success('Email reset!')
+      })
+    },
     getWebhookUrl () {
       return this.webhookCode
     }
@@ -136,6 +147,7 @@ export default {
   created () {
     Auth.currentAuthenticatedUser().then((user) => {
       this.webhookCode = user.attributes['custom:webhook_code']
+      this.emailCode = user.attributes['custom:email_code']
       let base = 'https://api.personalstats.nl/'
       let url = base + 'webhook/' + user.attributes['custom:webhook_code'] + '/' + user.attributes['sub']
     })
