@@ -24,6 +24,7 @@
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-snotify": "^3.2.1",
+    "vue-svg-loader": "^0.12.0",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
   },

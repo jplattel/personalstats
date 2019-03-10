@@ -8,3 +8,4 @@ node_modules/
 __pycache__/
 yarn-error.log
 dist
+resources/

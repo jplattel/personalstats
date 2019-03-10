@@ -1,33 +1,28 @@
 <template>
-  <div class="container">
-    <div class="col-md-4 offset-md-4" style="padding-top: 100px">
+  <div class="col-sm-12 col-md-6 col-lg-3 col-lg-2">
+
+    <white-logo viewBox="0 0 300 200" />
+    <!-- <input type="text" v-model="username"> -->
+    <form-input label="Email" v-model="username"></form-input>
+
+    <form-input label="Password" v-model="password" type="password"></form-input>
+
+    <div style="margin-top: 40px;">
+      <form-button :class="['float-left', 'light']">
+        <router-link :to="{'name': 'signup'}">Sign Up</router-link>
+      </form-button>
       
-      <div class="card shadow-lg bg-light mb-3">
-        <div class="card-header">
-          Personalstats (login)
-        </div>
-
-        <div class="card-body">
-          <form>
-            <div class="form-group">
-              <label for="">Email</label>
-              <input type="text" autocomplete="username" class="form-control" v-model="username" placeholder="your@email.com">
-            </div>
-            <div class="form-group">
-              <label for="">Password</label>
-              <input type="password" autocomplete="current-password" class="form-control" v-model="password" placeholder="">
-            </div>
-            <router-link :to="{'name': 'signup'}" class="btn btn-outline-dark">Sign Up</router-link>
-            <input @click.prevent="signIn" type="submit" value="Login" class="btn float-right btn-primary">
-          </form>
-        </div>
-
-      </div>
+      <form-button :class="['float-right', 'light']">
+        <a href="" @click.prevent="signIn">Login &raquo;</a>
+      </form-button>
     </div>
-  </div>
+  </div>  
 </template>
 
 <script>
+import FormButton from '@/components/FormButton'
+import FormInput from '@/components/FormInput'
+import WhiteLogo from '@/assets/img/logo_white.svg';
 
 export default {
   name: 'Login',
@@ -37,6 +32,11 @@ export default {
       username: '',
       password: ''
     }
+  },
+  components: {
+    FormButton,
+    FormInput,
+    WhiteLogo
   },
   methods: {
     signIn () {
@@ -61,9 +61,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  label {
-    font-weight: 500;
-  }
-</style>
