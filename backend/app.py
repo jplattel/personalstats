@@ -165,6 +165,7 @@ def parse_email(event):
         Filter="sub = \"{}\"".format(sub)
     ).get('Users')
     if len(cognito_user) != 1:
+        s3_client.delete_object(Bucket='email.personalstats.nl', Key=event.key)
         raise NotFoundError('User {sub}, not found, deleting message'.format(sub))
     
     attributes = cognito_user[0].get("Attributes", [])
@@ -173,6 +174,7 @@ def parse_email(event):
     ))
 
     if not email_code == user_email_code[0].get("Value"):
+        s3_client.delete_object(Bucket='email.personalstats.nl', Key=event.key)
         raise NotFoundError('User not found, deleting message')
     
     # Get session id
@@ -180,6 +182,7 @@ def parse_email(event):
         lambda attr: attr.get("Name") == "custom:session_id", attributes
     ))
     if len(session_id) != 1:
+        s3_client.delete_object(Bucket='email.personalstats.nl', Key=event.key)
         raise NotFoundError('User not found, deleting message')
 
     # Get the post data: expecting: {"name": "node content here"}
@@ -194,6 +197,8 @@ def parse_email(event):
     except WFLoginError:
         # TODO: email the user once the let them know we have trouble with the 
         # connection to workflowy. (and then suffix the expended session ID)
-        raise BadRequestError("Cannot authorize with Workflowy")
+        s3_client.delete_object(Bucket='email.personalstats.nl', Key=event.key)
+        raise BadRequestError("Cannot authorize with Workflowy, deleting message")
 
     # print("Object uploaded for bucket: %s, key: %s" % (event.bucket, event.key))
+    s3_client.delete_object(Bucket='email.personalstats.nl', Key=event.key)
