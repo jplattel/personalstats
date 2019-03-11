@@ -1,32 +1,16 @@
 <template>
-  <div class="container">
+  <div id="page">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 col-xs-12">
         <h1 class="display-4">Settings</h1>
       </div>
 
-      <div class="col-md-6">
-
-        <div class="card">
-          <div class="card-header">
-            Workflowy
-          </div> 
-          <div class="card-body">
-            <div v-if="sessionId" class="alert alert-success" role="alert">
-              Workflowy is <strong>connected</strong> successfully! (<a href="#" @click="disconnectWorkflowy">disconnect</a>)
-            </div>
-
-            <div v-else class="alert alert-danger" role="alert">
-              Workflowy is <strong>not</strong> connected. (<a href="#" @click="connectWorkflowy">Authenticate?</a>)
-            </div>
-          </div>
-        </div>
-
-        <div class="card">
-          <div class="card-header">
+      <div class="col-md-4 col-xs-12">
+        <div class="tile">
+          <div class="tile-header">
             FAQ
           </div> 
-          <div class="card-body">
+          <div class="tile-body">
             <p>Are things not working as they are suppose to? This small FAQ might help you out!</p>
 
             <ul>
@@ -48,13 +32,24 @@
         </div>
       </div>
 
-      <div class="col-md-6">
+      <div class="col-md-4 col-xs-12">
+        <div class="tile">
+          <div class="tile-header">
+            Workflowy
+          </div> 
+          <div class="tile-body">
+            <div v-if="sessionId" class="alert alert-success" role="alert">
+              Workflowy is <strong>connected</strong> successfully! (<a href="#" @click="disconnectWorkflowy">disconnect</a>)
+            </div>
 
-        <div class="card">
-          <div class="card-header">
+            <div v-else class="alert alert-danger" role="alert">
+              Workflowy is <strong>not</strong> connected. (<a href="#" @click="connectWorkflowy">Authenticate?</a>)
+            </div>
+          </div>
+          <div class="tile-header">
             Webhooks
           </div> 
-          <div class="card-body">
+          <div class="tile-body">
             <p>
               It is possible for you to add items to the top of you worklowy list by using webhooks 
               (this enables integration with <a href="http://ifttt.com">IFTTT</a> and <a href="https://zapier.com">Zapier</a> for example). Post to the following webhook:
@@ -63,15 +58,11 @@
             <input class="form-control" :value="'https://api.personalstats.nl/webhook/' + webhookCode + '/' + user">
             
             <button @click="resetWebhookUrl()" style="margin-top: 10px" class="btn btn-block btn-outline-dark">Reset to a new Webhook URL</button>
-
           </div>
-        </div>
-
-        <div class="card border-warning">
-          <div class="card-header bg-transparent">
-            Add via email (<i>work in progress</i>)
+          <div class="tile-header">
+            Email (<i>beta</i>)
           </div> 
-          <div class="card-body border-warning">
+          <div class="tile-body border-warning">
             <p>
               It is possible for you to add items to the top of you worklowy list by using email. 
               The title of the email will be the first line of the item in Workflowy and the email
@@ -83,7 +74,6 @@
             </p>
             
             <a class="btn btn-block btn-outline-dark" @click="resetEmail()">Reset to a new email</a>
-
           </div>
         </div>
         
@@ -156,5 +146,29 @@ export default {
 </script>
 
 <style>
-
+  .tile{
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+    /* box-shadow: 0px 0px 10px 1px #4c4c4c; */
+    border: 2px solid #4c4c4c;
+    float: left;
+    border-radius: 7px;
+    padding: 20px;
+  }
+  .tile-header{
+    font-size: 25px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  .tile-header a{
+    color: #4c4c4c;
+  }
+  .tile-body{
+    width: 100%; 
+  }
 </style>

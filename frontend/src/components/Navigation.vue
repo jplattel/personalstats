@@ -13,7 +13,7 @@
         <router-link :to="{'name': 'search'}">Search</router-link>
       </form-button>
       <form-button :class='["dark"]'>
-        <router-link :to="{'name': 'search'}">Sources</router-link>
+        <router-link :to="{'name': 'sources'}">Sources</router-link>
       </form-button>
     </form-button-group>
 
@@ -53,5 +53,6 @@ export default {
   .navigation{
     height: 80px;
     padding: 20px;
+    margin-top: 20px;
   }
 </style>

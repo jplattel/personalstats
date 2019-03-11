@@ -1,16 +1,15 @@
 <template>
-  <div class="container">
+  <div id="page">
+
+    <h1 class="display-4">Dashboard</h1>
+    
     <div v-if="!sessionId" class="alert alert-danger" role="alert">
       Workflowy is currently <strong>not</strong> connected. <router-link :to="{'name': 'settings'}">Connect again?</router-link>
     </div>
-
-    <h1 class="display-4">Dashboard</h1>
-
-    <div class="row">
-      <div class="card-columns">
-        <card v-for="card in cards" :card="card" :key="card.uuid"/>
-      </div>
-    </div>
+    
+    
+    <card class="col-md-4" v-for="card in cards" :card="card" :key="card.uuid"/>
+    
   </div>
 </template>
 
@@ -29,3 +28,10 @@ export default {
   }),
 }
 </script>
+
+<style>
+  #page{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+</style>

@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,400');
+
 body {
-    font-family: 'LatoLatinWeb', Avenir, HelveticaNeue-Light, "Helvetica Neue Light",
-                 "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: 'Montserrat', Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #141823;
     font-size: 1.1em;
     background-color: #ecedef;
@@ -12,9 +13,14 @@ body {
     width: 100%;
     box-sizing: border-box;
     word-break: break-word;
-    background: #0f2027;
+    background: url('../img/bg.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* background: #0f2027;
     background: -webkit-gradient(linear,left top,right top,from(#2c5364),color-stop(#203a43),to(#0f2027));
-    background: linear-gradient(90deg,#2c5364,#203a43,#0f2027);
+    background: linear-gradient(90deg,#2c5364,#203a43,#0f2027); */
 }
 p {
     margin: 1.5em 0;

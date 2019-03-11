@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div id="page">
+
+    <h1 class="display-4">Search</h1>
 
     <div v-if="!sessionId" class="alert alert-danger" role="alert">
       Workflowy is currently <strong>not</strong> connected. <router-link :to="{'name': 'settings'}">Connect again?</router-link>
@@ -28,7 +30,7 @@
           </select>
         </div>
         <div class="input-group-append">
-        <button class="btn btn-primary btn-outline-primary" @click="createCard">Create Card</button>
+        <button class="btn btn-primary btn-outline-primary" @click="createCard">Create Tile</button>
         </div>
       </div>
 
@@ -150,4 +152,5 @@ export default {
     background: green;
     color: black;
   }
+
 </style>

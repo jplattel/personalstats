@@ -22,16 +22,18 @@ export default {
     border: 2px solid;
     border-radius: 21px;
     padding: 8px;
+    display: inline;
+  }
+  .form-button a{
+    display: inline;
+    padding: 8px;
     padding-left: 15px;
     padding-right: 15px;
-    display: inline;
   }
   .form-button:hover{
     cursor: pointer;
     box-shadow: 0px 0px 10px 1px; 
   }
-
-
   /* Light styles */
   .light{
     border: 2px solid white;

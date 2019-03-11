@@ -9,6 +9,7 @@ const Search = () => import(/* webpackChunkName: "search" */ '@/components/dashb
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */ '@/components/dashboard/Dashboard.vue')
 const Settings = () => import(/* webpackChunkName: "settings" */ '@/components/dashboard/Settings.vue')
 const CardView = () => import(/* webpackChunkName: "cardview" */ '@/components/cards/CardView.vue')
+const Sources = () => import(/* webpackChunkName: "sources" */ '@/components/dashboard/Sources.vue')
 
 import * as AmplifyModules from 'aws-amplify'
 import { AmplifyPlugin } from 'aws-amplify-vue';
@@ -50,6 +51,12 @@ const routes = [
     name: 'search',
     path: '/search', 
     component: Search,
+    meta: { requiresAuth: true}
+  },
+  { 
+    name: 'sources',
+    path: '/sources', 
+    component: Sources,
     meta: { requiresAuth: true}
   },
   { 
