@@ -74,16 +74,29 @@ export default {
       this.$db.files.toArray().then( files => this.files = files )
     },
     add (file){
-      console.log(file)
+      let id = uuid()
       this.$db.files.add({ 
-        id: uuid(), 
+        id: id, 
         title: file.title, 
         content: file.content,
         created_at: new Date(), 
         updated_at: new Date() 
-      }).then(() => this.update())
+      }).then(() => {
+        let fileNodes = []
+        file.content.split("\n").forEach(line => {
+          fileNodes.push({
+            "name": line,
+            "source": id
+          })
+        })
+        this.$store.commit('addNodes', fileNodes)
+        this.update()
+      })
     },
     remove (file){
+      // Remove nodes for file
+      this.$store.commit('removeFileNodes', file);
+      // Remove files
       this.$db.files.where({'id': file.id}).delete().then(() => this.update())
     },
     readFile(ev) {

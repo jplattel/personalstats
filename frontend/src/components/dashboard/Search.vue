@@ -44,12 +44,12 @@
         <node v-for="node in searchResults" :key="node.uuid" :node="node" :children="false"></node>
       </ul>
 
-      <a class="btn btn-outline-primary" @click="getWorkflowyData">Refresh from Workflowy</a>
-
     </div>
 
+    <a class="btn btn-outline-primary" @click="getWorkflowyNodes">Refresh from Workflowy</a>
+
     <!-- Loader -->
-    <div v-else class="text-center">
+    <div v-if="loading" class="text-center">
       <p class="font-weight-light"><span class="loading earth"></span> <em>Loading items</em>..</p>
     </div>
 
@@ -67,12 +67,12 @@ export default {
   name: 'Dashboard',
   data: () => {
     return {
+      loading: true,
       user: undefined,
       rootNode: [],
       search: '',
       searchResults: [],
       cardMethod: '',
-      files: []
     }
   },
   components:{
@@ -89,10 +89,11 @@ export default {
     clearSearch () {
       this.searchResults = []
     },
-    getWorkflowyData () {
+    getWorkflowyNodes () {
       let auth_payload = { body: { "session_id": this.sessionId } }
       this.$Amplify.API.post("personalstats", '/workflowy/data', auth_payload).then(response => {
         // Store the session ID.
+        response.map(node => node.source = 'workflowy')
         this.rootNode.concat(response)
         this.$store.commit('addNodes', response)
         this.$snotify.success('Synced with Workflowy!')
@@ -102,15 +103,9 @@ export default {
         console.log(error)
       });
     },
-    getLocalData () {
-      this.$db.files.toArray().then( files => {
-        let nodes = []
-        files.forEach(file => {
-          file.content.split("\n").forEach(line => {
-            this.rootNode.push({"name": line})
-          })
-        })
-      })
+    getNodes() {
+      this.rootNode = this.$store.state.nodes
+      this.loading = false
     },
     createCard() {
       if (this.search && this.cardMethod) {
@@ -119,7 +114,6 @@ export default {
           'search': this.search,
           'method': this.cardMethod
         }
-        
         this.$store.commit('setCard', card)
         // this.$Amplify.API.post("personalstats", '/cards', {'body': card})
         this.$snotify.success('Navigating to the dashboard', 'Card added!')
@@ -131,28 +125,14 @@ export default {
     ...mapGetters(['searchNodes']),
     ...mapState(['sessionId'])
   },
-  mounted () {
+  watch: {
+    '$route': 'getNodes'
+  },
+  created () {
     // On next tick as seen here: https://vuejs.org/v2/api/#mounted
     this.$nextTick(function () {
-
-      // Get local data first
-      this.getLocalData()
-
-      // If no nodes, fetch from Workflowy
-      if (!this.$store.state.nodes) {
-        // Check if a workflowy ID is existing...
-        if (!this.$store.state.sessionId) {
-          this.$snotify.warning('You will need to sign in to workflowy');
-        } else {
-          console.log("Getting data from Workflowy")
-          this.getWorkflowyData() 
-        }
-      } 
-      
-      this.rootNode = this.$store.state.nodes
-
+      this.getNodes()
     })
-    // Fetch the cards the user has configured...
   }
 }
 </script>

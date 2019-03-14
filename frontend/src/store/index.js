@@ -29,10 +29,11 @@ const store = new Vuex.Store({
   },
   getters: {
     searchNodes: (state) => (query) => {
+      // Recursive search function
       function search(nodes, query, results) {
         for (let i = 0; i < nodes.length; i++) {
           var node = nodes[i];
-          if (node.name && node.name.indexOf(query) !== -1) {
+          if (node.name && node.name.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
             results.push(node)
           } // And its children
           if (node.children) {
@@ -43,6 +44,8 @@ const store = new Vuex.Store({
         }
         return results 
       }
+        
+      // Start searching
       if (state.nodes) {
         return search(state.nodes, query, [])
       } else {
@@ -62,7 +65,16 @@ const store = new Vuex.Store({
     },
     addNodes(state, nodes) {
       state.nodes = state.nodes.concat(nodes)
-      console.log(state.nodes)
+    },
+    removeFileNodes(state, file){
+      state.nodes = state.nodes.filter(node => {
+        return node.source != file.id;
+      })
+    },
+    removeWorkflowyNodes(state){
+      state.nodes = state.nodes.filter(node => {
+        return node.source != 'workflowy';
+      })
     },
     logout(state) {
       state.user = null
