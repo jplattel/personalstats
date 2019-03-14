@@ -24,7 +24,7 @@ const store = new Vuex.Store({
   state: {
     user: null,
     sessionId: null,
-    nodes: null,
+    nodes: [],
     cards: []
   },
   getters: {
@@ -60,10 +60,14 @@ const store = new Vuex.Store({
     setNodes(state, nodes) {
       state.nodes = nodes
     },
+    addNodes(state, nodes) {
+      state.nodes = state.nodes.concat(nodes)
+      console.log(state.nodes)
+    },
     logout(state) {
       state.user = null
       // state.sessionId = null // We might want to keep the token for logging in next time..
-      state.nodes = null
+      state.nodes = []
     },
     setCard(state, card) {
       state.cards.push(card)

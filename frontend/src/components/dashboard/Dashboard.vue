@@ -25,7 +25,7 @@ export default {
   computed: mapState({
     cards: state => state.cards,  
     sessionId: state => state.sessionId,  
-  }),
+  })
 }
 </script>
 

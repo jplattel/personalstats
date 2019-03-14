@@ -8,7 +8,7 @@
     </div>
     
     <!-- If a rootnode is cached in localstorage -->
-    <div v-else-if="rootNode && sessionId">
+    <div v-if="rootNode.length !== 0">
 
       <!-- Search box -->
       <div class="input-group" id="search">
@@ -50,7 +50,7 @@
 
     <!-- Loader -->
     <div v-else class="text-center">
-      <p class="font-weight-light"><span class="loading earth"></span> <em>Loading items from Workflowy</em>..</p>
+      <p class="font-weight-light"><span class="loading earth"></span> <em>Loading items</em>..</p>
     </div>
 
   </div>
@@ -68,10 +68,11 @@ export default {
   data: () => {
     return {
       user: undefined,
-      rootNode: undefined,
+      rootNode: [],
       search: '',
       searchResults: [],
-      cardMethod: ''
+      cardMethod: '',
+      files: []
     }
   },
   components:{
@@ -92,14 +93,24 @@ export default {
       let auth_payload = { body: { "session_id": this.sessionId } }
       this.$Amplify.API.post("personalstats", '/workflowy/data', auth_payload).then(response => {
         // Store the session ID.
-        this.rootNode = response
-        this.$store.commit('setNodes', response)
+        this.rootNode.concat(response)
+        this.$store.commit('addNodes', response)
         this.$snotify.success('Synced with Workflowy!')
       }).catch(error => {
         // Notify the user
         this.$snotify.error('Uh oh, cannot authenticate with Workflowy')
         console.log(error)
       });
+    },
+    getLocalData () {
+      this.$db.files.toArray().then( files => {
+        let nodes = []
+        files.forEach(file => {
+          file.content.split("\n").forEach(line => {
+            this.rootNode.push({"name": line})
+          })
+        })
+      })
     },
     createCard() {
       if (this.search && this.cardMethod) {
@@ -123,6 +134,10 @@ export default {
   mounted () {
     // On next tick as seen here: https://vuejs.org/v2/api/#mounted
     this.$nextTick(function () {
+
+      // Get local data first
+      this.getLocalData()
+
       // If no nodes, fetch from Workflowy
       if (!this.$store.state.nodes) {
         // Check if a workflowy ID is existing...
@@ -132,9 +147,10 @@ export default {
           console.log("Getting data from Workflowy")
           this.getWorkflowyData() 
         }
-      } else {
-        this.rootNode = this.$store.state.nodes
-      }
+      } 
+      
+      this.rootNode = this.$store.state.nodes
+
     })
     // Fetch the cards the user has configured...
   }
