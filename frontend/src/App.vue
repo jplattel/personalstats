@@ -1,4 +1,5 @@
 <template>
+
   <div v-bind:class="$route.path ==='/login' || $route.path ==='/signup' ?  'gradient' : ''">
 
       <!-- Modal -->

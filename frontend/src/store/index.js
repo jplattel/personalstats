@@ -62,7 +62,7 @@ const store = new Vuex.Store({
     },
     logout(state) {
       state.user = null
-      state.sessionId = null
+      // state.sessionId = null // We might want to keep the token for logging in next time..
       state.nodes = null
     },
     setCard(state, card) {

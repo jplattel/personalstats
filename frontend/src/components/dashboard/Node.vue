@@ -19,9 +19,7 @@ export default {
   methods: {
     highlight () {
       let instance = new Mark(document.querySelector(".node-" + this.node.uuid))
-      
-      // instance.markRegExp(RegExp(/^(?=.)([+-]?([0-9]*)([.\,](\d+))?)/g),
-      instance.markRegExp(RegExp(/(\d+([\,\.]?\d+)?)/g),
+      instance.markRegExp(RegExp(/\b(\d+([,\.]?\d+)?)\b/g),
         {"element": "span", "className": "highight-number"}
       )
       instance.markRegExp(RegExp(/\B#\w*[a-zA-Z]+\w*/g),

@@ -121,20 +121,21 @@ export default {
     ...mapState(['sessionId'])
   },
   mounted () {
-    
-    // If no nodes, fetch from Workflowy
-    if (!this.$store.state.nodes) {
-      // Check if a workflowy ID is existing...
-      if (!this.$store.state.sessionId) {
-        this.$snotify.warning('You will need to sign in to workflowy');
+    // On next tick as seen here: https://vuejs.org/v2/api/#mounted
+    this.$nextTick(function () {
+      // If no nodes, fetch from Workflowy
+      if (!this.$store.state.nodes) {
+        // Check if a workflowy ID is existing...
+        if (!this.$store.state.sessionId) {
+          this.$snotify.warning('You will need to sign in to workflowy');
+        } else {
+          console.log("Getting data from Workflowy")
+          this.getWorkflowyData() 
+        }
       } else {
-        console.log("Getting data from Workflowy")
-        this.getWorkflowyData() 
+        this.rootNode = this.$store.state.nodes
       }
-    } else {
-      this.rootNode = this.$store.state.nodes
-    }
-
+    })
     // Fetch the cards the user has configured...
   }
 }
