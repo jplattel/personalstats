@@ -1,7 +1,7 @@
 <template>
   <div id="page">
     
-    <h1 class="display-4">Sources</h1>    
+    <h1 class="display-4">Sources <sup>(alpha)</sup> </h1>    
 
     <div class="row">
       <div class="col-md-6">
@@ -16,7 +16,7 @@
 
         <form-input-group>
           <form-input class="dark" type="text" v-model="upload.title" placeholder="Name"></form-input>
-          <form-input class="dark" type="file" @change="readFile" name="file" label="Select a file"></form-input>
+          <form-input class="dark" type="file" @change="readFile" name="file" label="Select a file" accept=".txt, .csv"></form-input>
           <form-button class="dark"><a href="#" @click.prevent="uploadFile">Allow access</a></form-button>
         </form-input-group>
       </div>
@@ -117,3 +117,9 @@ export default {
   } 
 }
 </script>
+
+<style>
+  sup{ 
+    font-size: 20px;
+  }
+</style>

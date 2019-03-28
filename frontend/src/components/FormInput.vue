@@ -1,7 +1,7 @@
 <template>
   <div class="form-input">
     <label :for="name" v-if="label" :class="{ 'isFile': isFile }">{{ label }}</label>
-    <input :name="name" :id="name" :type="type" :placeholder="placeholder" 
+    <input :name="name" :id="name" :type="type" :accept="accept" :placeholder="placeholder" 
     @input="$emit('input', $event.target.value)"
     @change="$emit('change', $event)">  
   </div>
@@ -15,6 +15,7 @@ export default {
     placeholder: String,
     name: String,
     label: String,
+    accept: String,
     type: {
       type: String,
       default: 'text'

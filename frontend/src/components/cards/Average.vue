@@ -13,27 +13,27 @@ export default {
   data: () => {
     return {
       average: undefined,
-      cards: []
+      nodes: []
     }
   },
   methods: {
     computeSum () {
       const number_regex = RegExp(/\b(\d+[\,\.]?\d+)\b/g)
       let sum = 0      
-      this.cards.forEach(card => {
-        let r = card.name.match(number_regex)
+      this.node.forEach(node => {
+        let r = node.name.match(number_regex)
         if (r) {
           sum = sum + parseFloat(r[0])
         }
       });
-      this.average = (sum / this.cards.length).toFixed(2)
+      this.average = (sum / this.nodes.length).toFixed(2)
     }
   },
   computed: {
     ...mapGetters(['searchNodes'])
   },
   mounted () {
-    this.cards = this.searchNodes(this.search)
+    this.nodes = this.searchNodes(this.search)
     this.computeSum()
   }
 }

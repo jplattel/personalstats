@@ -1,18 +1,24 @@
 <template>
-
-  <div v-if="card && $route.params.uuid" class="card">
-    <div class="card-header">
-      {{ card.method }}: {{ card.search }} 
+  <div id="page">
+    <div v-if="card && $route.params.uuid" class="tile">
+      <div class="tile-header">
+        {{ card.method }}: {{ card.search }} 
+      </div>
+      <div class="tile-body">
+        <div v-if="card.method" v-bind:is="card.method" :search="card.search"></div>
+      </div>
+      <div class="tile-footer">
+        <ul>
+          <li :key="n.id" v-for="n in searchResults">{{ n.name }}</li>
+        </ul>
+      </div>
     </div>
-    <div class="card-body">
-      <div v-if="card.method" v-bind:is="card.method" :search="card.search"></div>
-    </div>
-    
   </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import Card from '@/components/cards/Card'
 
 import Average from '@/components/cards/Average'
@@ -28,6 +34,7 @@ export default {
   data: () => {
     return {
       card: undefined,
+      searchResults: []
     }
   },
   components: {
@@ -39,18 +46,31 @@ export default {
     SumChart,
     ListChildren,
   },
-  mounted () {
-    console.log("uuid", this.$route.params.uuid)
-    let card = this.$store.state.cards.filter((card) => {
-      return card.uuid === this.$route.params.uuid
-    })
-
-    if (card.length === 0) {
-      this.$snotify.danger('Returning to the dashboard', 'Uh oh, card not found!')
-    } else {
-      this.card = card[0]
+  methods: {
+    getCard() {
+      
+      let card = this.$store.state.cards.filter((card) => {
+        return card.uuid === this.$route.params.uuid
+      })
+      
+      if (card.length === 0) {
+        this.$snotify.danger('Returning to the dashboard', 'Uh oh, card not found!')
+      } else {
+        this.card = card[0]
+        this.searchResults = this.searchNodes(card[0].search)
+      }
+      
     }
-  }
+  },
+  watch: {
+    '$route': 'getCard'
+  },
+  created () {
+    this.getCard()
+  },
+  computed: {
+    ...mapGetters(['searchNodes'])
+  },
 }
 </script>
 

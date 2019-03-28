@@ -6,7 +6,7 @@
       <p>You have not created any tiles yet. Make some <router-link :to="{'name': 'search'}">search for things</router-link> to create them.</p>
     </div>
 
-    <div v-else-if="cards">
+    <div v-else-if="cards" class="row">
       <card class="col-md-4" v-for="card in cards" :card="card" :key="card.uuid"/>
     </div>
     
@@ -34,4 +34,5 @@ export default {
     padding-left: 30px;
     padding-right: 30px;
   }
+  
 </style>

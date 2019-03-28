@@ -14,7 +14,10 @@ export default {
   name: 'Node',
   props: {
     node: Object, 
-    children: Boolean 
+    children: {
+      type: Boolean,
+      default: false,
+    } 
   },
   methods: {
     highlight () {
