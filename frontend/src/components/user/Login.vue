@@ -3,9 +3,9 @@
 
     <white-logo viewBox="0 0 300 200" />
     <!-- <input type="text" v-model="username"> -->
-    <form-input label="Email" v-model="username"></form-input>
+    <form-input :class="['light']" label="Email" v-model="username"></form-input>
 
-    <form-input label="Password" v-model="password" type="password"></form-input>
+    <form-input :class="['light']" label="Password" v-model="password" type="password"></form-input>
 
     <div style="margin-top: 40px;">
       <form-button :class="['float-left', 'light']">

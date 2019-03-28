@@ -21,6 +21,7 @@
     "uuid": "^3.3.2",
     "vue": "^2.5.17",
     "vue-chartjs": "^3.4.0",
+    "vue-idb": "^0.2.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-snotify": "^3.2.1",

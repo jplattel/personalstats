@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     computeSum () {
-      const number_regex = RegExp(/\b(\d+[\,\.]?\d+)\b/g)
+      const number_regex = RegExp(/\b(\d+([,\.]?\d+)?)\b/g)
       let sum = 0
       
       this.cards.forEach(card => {

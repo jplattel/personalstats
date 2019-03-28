@@ -1,17 +1,17 @@
 <template>
-  
-    <div class="tile">
-      <div class="tile-header">
-        <router-link :to="{ name: 'cardview', params: { uuid: card.uuid }}">{{ card.method }}: {{card.search}} </router-link>
-        <button @click="deleteCard" type="button" class="close" aria-label="Close">
-          <span aria-hidden="true" class="tile-delete">&times;</span>
-        </button>
-      </div>
-      <div class="tile-body">
-        <div v-if="card.method" v-bind:is="card.method" :search="card.search"></div>
+    <div>
+      <div class="tile">
+        <div class="tile-header">
+          <router-link :to="{ name: 'cardview', params: { uuid: card.uuid }}">{{ card.method }}: {{card.search}} </router-link>
+          <button @click="deleteCard" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true" class="tile-delete">&times;</span>
+          </button>
+        </div>
+        <div class="tile-body">
+          <div v-if="card.method" v-bind:is="card.method" :search="card.search"></div>
+        </div>
       </div>
     </div>
-
 </template>
 
 <script>
@@ -48,8 +48,8 @@ export default {
 
 <style>
   .tile{
-    margin-left: 5px;
-    margin-right: 5px;
+    /* margin-left: 5px;
+    margin-right: 5px; */
     width: 100%;
     margin-bottom: 10px;
     /* box-shadow: 0px 0px 10px 1px #4c4c4c; */
